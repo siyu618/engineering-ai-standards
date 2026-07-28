@@ -29,16 +29,27 @@ Each layer builds on the one above it. Principles inform standards, which are im
 | `principles/` | Engineering philosophy | Why do we build software this way? |
 | `standards/` | Mandatory engineering rules | What rules must engineers follow? |
 | `patterns/` | Reusable engineering solutions | How do we usually solve this type of problem? |
-| `skills/` | AI-consumable structured instructions | How should an AI approach this task? |
-| `adapters/` | AI tool-specific configurations | What format does this AI tool require? |
+| `skills/` | AI-consumable structured instruction modules | How should an AI approach this task? |
+| `adapters/` | AI tool-specific entry-points | What format does this AI tool require? |
 | `evaluations/` | Skill regression prevention | Is the AI still performing correctly? |
 | `templates/` | Reusable document templates | What structure should this document follow? |
+| `docs/adr/` | Architecture Decision Records | Why was this decision made? |
+| `AGENTS.md` | Generic AI agent entry-point | How should agents use this repository? |
 
 ## Getting Started
 
 **For human engineers:** Start with `principles/` to understand our engineering philosophy, then review `standards/` for mandatory rules.
 
-**For AI coding agents:** Each adapter in `adapters/` references the relevant skills. AI agents should read from their respective adapter file to understand how to operate in this repository.
+**For AI coding agents:** Start with `AGENTS.md` for a high-level overview, then read your tool-specific adapter in `adapters/`. Each adapter references the relevant skills. AI agents should follow the layer hierarchy: principles → standards → patterns → skills.
+
+### AI Agent Entry Points
+
+| Tool | Entry Point |
+|------|-------------|
+| All agents | [`AGENTS.md`](AGENTS.md) — Generic instructions |
+| Claude Code | [`adapters/claude/CLAUDE.md`](adapters/claude/CLAUDE.md) |
+| Cursor | [`adapters/cursor/.cursorrules`](adapters/cursor/.cursorrules) |
+| GitHub Copilot | [`adapters/github-copilot/copilot-instructions.md`](adapters/github-copilot/copilot-instructions.md) |
 
 ## Versioning
 
@@ -56,7 +67,7 @@ Engineering standards, AI skills, and AI tool configurations are kept separate t
 
 ### Evaluation Framework
 
-Skills are treated like code. Each skill has corresponding evaluation cases that prevent regression when skills are updated. Before releasing a new version, evaluations must be run to ensure no capabilities are lost.
+Skills are treated like code. Each skill has corresponding evaluation cases that prevent regression when skills are updated. Before releasing a new version, evaluations must be run to ensure no capabilities are lost. See [`evaluations/README.md`](evaluations/README.md) for the full philosophy and [`evaluations/runner/run.py`](evaluations/runner/run.py) for the validation tool.
 
 ### AI-First Design
 

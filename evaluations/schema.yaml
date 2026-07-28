@@ -1,0 +1,143 @@
+# Evaluation Case Schema
+# This schema defines the required and optional fields for evaluation cases.
+
+evaluation_case:
+  description: "A single evaluation case for testing a skill."
+  required_fields:
+    - id
+    - skill
+    - category
+    - version
+    - task
+    - expected
+    - scoring
+
+  fields:
+    id:
+      type: string
+      description: "Unique identifier for the evaluation case."
+      pattern: "^[a-z0-9-]+$"
+      required: true
+
+    skill:
+      type: string
+      description: "Name of the skill module this case evaluates."
+      required: true
+
+    category:
+      type: string
+      description: "Domain category (system-design, coding, testing)."
+      enum:
+        - system-design
+        - coding
+        - testing
+      required: true
+
+    version:
+      type: string
+      description: "Semantic version of this evaluation case."
+      pattern: "^\\d+\\.\\d+\\.\\d+$"
+      required: true
+
+    task:
+      type: string
+      description: "The prompt given to the agent under evaluation."
+      required: true
+
+    context:
+      type: array
+      description: "Background information the agent needs."
+      items:
+        type: string
+      required: false
+
+    expected:
+      type: object
+      description: "Expected capabilities and forbidden behaviors."
+      required: true
+      fields:
+        must_include:
+          type: array
+          description: "Required capabilities the agent must demonstrate."
+          items:
+            type: string
+          required: true
+        forbidden:
+          type: array
+          description: "Behaviors the agent must avoid."
+          items:
+            type: string
+          required: false
+
+    scoring:
+      type: object
+      description: "Scoring dimensions and weights."
+      required: true
+      fields:
+        correctness:
+          type: object
+          description: "Technical accuracy of the output."
+          required: true
+          fields:
+            weight:
+              type: integer
+              description: "Weight percentage for this dimension."
+              minimum: 0
+              maximum: 100
+            description:
+              type: string
+            criteria:
+              type: array
+              items:
+                type: string
+
+        completeness:
+          type: object
+          description: "Coverage of all required aspects."
+          required: true
+          fields:
+            weight:
+              type: integer
+              minimum: 0
+              maximum: 100
+            description:
+              type: string
+            criteria:
+              type: array
+              items:
+                type: string
+
+        architecture:
+          type: object
+          description: "Structure and design quality."
+          required: true
+          fields:
+            weight:
+              type: integer
+              minimum: 0
+              maximum: 100
+            description:
+              type: string
+            criteria:
+              type: array
+              items:
+                type: string
+
+        maintainability:
+          type: object
+          description: "Operability and evolvability."
+          required: true
+          fields:
+            weight:
+              type: integer
+              minimum: 0
+              maximum: 100
+            description:
+              type: string
+            criteria:
+              type: array
+              items:
+                type: string
+
+  constraints:
+    - "Sum of scoring weights must equal 100."

@@ -1,8 +1,27 @@
+---
+name: design
+version: 1.0.0
+category:
+  - architecture
+  - system-design
+dependencies:
+  - principles/engineering-principles.md
+  - standards/architecture/system-design.md
+  - patterns/distributed-system/consistency.md
+  - patterns/cache/cache-aside.md
+evaluation:
+  enabled: true
+  cases:
+    - cache-design
+    - wallet-system
+    - agent-design
+---
+
 # System Design Skill
 
 **Purpose:** Design reliable, scalable, and maintainable systems.
 
-**References:** [Engineering Principles](../principles/engineering-principles.md), [System Design Standards](../standards/architecture/system-design.md)
+**References:** [Engineering Principles](../../principles/engineering-principles.md), [System Design Standards](../../standards/architecture/system-design.md)
 
 ## Role
 

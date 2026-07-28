@@ -1,8 +1,26 @@
+---
+name: ai-agent-development
+version: 1.0.0
+category:
+  - ai
+  - agent
+dependencies:
+  - principles/engineering-principles.md
+  - patterns/ai-agent/architecture.md
+  - patterns/ai-agent/memory.md
+  - patterns/ai-agent/tool-use.md
+  - patterns/ai-agent/evaluation.md
+evaluation:
+  enabled: true
+  cases:
+    - ai-agent-eval-design
+---
+
 # AI Agent Development Skill
 
 **Purpose:** Design and implement reliable AI agent systems.
 
-**References:** [Engineering Principles](../principles/engineering-principles.md), [AI Agent Architecture](../patterns/ai-agent/architecture.md), [AI Agent Memory](../patterns/ai-agent/memory.md), [AI Agent Tool Use](../patterns/ai-agent/tool-use.md), [AI Agent Evaluation](../patterns/ai-agent/evaluation.md)
+**References:** [Engineering Principles](../../principles/engineering-principles.md), [AI Agent Architecture](../../patterns/ai-agent/architecture.md), [AI Agent Memory](../../patterns/ai-agent/memory.md), [AI Agent Tool Use](../../patterns/ai-agent/tool-use.md), [AI Agent Evaluation](../../patterns/ai-agent/evaluation.md)
 
 ## Role
 
@@ -35,7 +53,7 @@ Define:
 
 ### Step 3: Implement Tools
 
-For each tool, follow the [Tool Use patterns](../patterns/ai-agent/tool-use.md):
+For each tool, follow the [Tool Use patterns](../../patterns/ai-agent/tool-use.md):
 
 - One tool = one responsibility.
 - Structured inputs and outputs.

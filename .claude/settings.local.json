@@ -5,7 +5,10 @@
       "Bash(git commit -m 'feat: initial release of Engineering AI Standards v1.0.0 *)",
       "Bash(git push *)",
       "Bash(ln -sf adapters/claude/CLAUDE.md CLAUDE.md)",
-      "Bash(ln -sf adapters/cursor/.cursorrules .cursorrules)"
+      "Bash(ln -sf adapters/cursor/.cursorrules .cursorrules)",
+      "Bash(git commit *)",
+      "Bash(git rm *)",
+      "Bash(python *)"
     ]
   }
 }

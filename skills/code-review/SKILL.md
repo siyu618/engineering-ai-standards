@@ -1,8 +1,25 @@
+---
+name: code-review
+version: 1.0.0
+category:
+  - review
+  - quality
+dependencies:
+  - principles/engineering-principles.md
+  - standards/coding/general.md
+  - standards/testing/testing.md
+  - patterns/ai-agent/architecture.md
+evaluation:
+  enabled: true
+  cases:
+    - code-review-detect
+---
+
 # Code Review Skill
 
 **Purpose:** Perform thorough and constructive code reviews.
 
-**References:** [Engineering Principles](../principles/engineering-principles.md), [General Coding Standards](../standards/coding/general.md)
+**References:** [Engineering Principles](../../principles/engineering-principles.md), [General Coding Standards](../../standards/coding/general.md)
 
 ## Role
 

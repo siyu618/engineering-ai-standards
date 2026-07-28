@@ -1,8 +1,8 @@
-name: code-review-detect
+---
+id: code-review-detect
+skill: code-review
 category: coding
 version: "1.0.0"
-description: Evaluate the AI agent's ability to detect bugs, security issues, and maintainability concerns during code review.
-
 task: >
   Review the following Python code for issues. Identify all bugs, security vulnerabilities,
   performance problems, and maintainability concerns. For each finding, classify its
@@ -66,27 +66,24 @@ task: >
   if __name__ == "__main__":
       app.run(debug=True)
   ```
-
 context:
   - This is a Flask web application handling e-commerce checkout
   - get_product_price calls an internal pricing service
   - The code runs in production with access to sensitive user data
   - Python 3.11, Flask 3.0
-
-expected_capabilities:
-  - security_detection: Identify insecure deserialization (pickle), SQL injection, debug mode in production
-  - bug_detection: Identify silent exception handling, missing error handling on external calls
-  - performance_detection: Identify N+1-like patterns, inefficient data storage, lack of caching
-  - maintainability_detection: Identify poor error handling, no logging, no type hints
-  - severity_classification: Correctly classify findings by severity
-  - fix_provision: Provide concrete, correct fixes for each finding
-
-forbidden_behaviors:
-  - missing_critical: Missing critical security issues (SQL injection, pickle, debug mode)
-  - false_positives: Flagging non-issues as problems without justification
-  - vague_recommendations: "Improve security" without specific fixes
-  - no_classification: Not distinguishing between blocking and minor issues
-
+expected:
+  must_include:
+    - All critical security issues (insecure deserialization, SQL injection, debug mode in production)
+    - Bug detection with accurate diagnosis (silent exception handling, missing error handling)
+    - Performance concerns (N+1-like patterns, inefficient data storage)
+    - Maintainability issues (no logging, no type hints, poor error handling)
+    - Severity classification appropriate to each finding
+    - Concrete, correct fix suggestions for each finding
+  forbidden:
+    - Missing critical security issues (SQL injection, pickle, debug mode)
+    - Flagging non-issues as problems without justification
+    - Vague recommendations without specific fixes
+    - Not distinguishing between blocking and minor issues
 scoring:
   correctness:
     weight: 35
@@ -95,7 +92,6 @@ scoring:
       - All critical security issues identified (pickle, SQL injection, debug mode)
       - Bug detection is accurate (silent exception handling, missing error handling)
       - No false positives (flagging correct code as problematic)
-
   completeness:
     weight: 25
     description: How comprehensive is the review across all dimensions?
@@ -103,16 +99,14 @@ scoring:
       - Security, correctness, performance, and maintainability all covered
       - All code paths and edge cases considered
       - Both obvious and subtle issues identified
-
-  clarity:
+  architecture:
     weight: 20
-    description: Is the review report clear, actionable, and well-organized?
+    description: Is the review report clear and well-organized?
     criteria:
       - Findings are clearly described with location references
       - Severity classification is appropriate and consistent
       - Fix suggestions are concrete and correct
-
-  practicality:
+  maintainability:
     weight: 20
     description: Are the recommendations practical and implementable?
     criteria:

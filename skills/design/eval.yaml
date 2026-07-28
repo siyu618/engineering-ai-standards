@@ -1,0 +1,58 @@
+---
+id: cache-design
+skill: design
+category: system-design
+version: "1.0.0"
+task: "Design a caching layer for a social media API that serves user profiles. The API receives 100,000 reads per second and 1,000 writes per second. User profiles are approximately 5KB each and there are 10 million active users. The cache must reduce database load by at least 90 percent. Consider consistency requirements, cache invalidation, failure modes, and monitoring."
+context:
+  - "Read-to-write ratio: 100:1"
+  - "Target cache hit rate: greater than 95 percent"
+  - "Acceptable staleness: up to 5 minutes for non-critical fields"
+  - "Critical fields (account status, privacy settings) must be strongly consistent"
+  - "Current database: PostgreSQL with read replicas"
+  - "Cache budget: $500/month for cache infrastructure"
+  - "Team has operational experience with Redis and Memcached"
+expected:
+  must_include:
+    - Cache size estimation and memory requirements calculation
+    - Cache-Aside pattern implementation
+    - Consistency handling between cache and database for critical and non-critical data
+    - Cache invalidation strategy (TTL, write-through, event-based)
+    - Cache failure modes: breakdown, penetration, avalanche
+    - Cache monitoring metrics and alerting
+    - Trade-off analysis of alternatives with justification
+  forbidden:
+    - Failing to address consistency between cache and database
+    - Not considering cache failure scenarios
+    - Assuming infinite cache or zero network latency
+    - Omitting observability for cache performance
+scoring:
+  correctness:
+    weight: 30
+    description: "Are the cache design decisions technically correct?"
+    criteria:
+      - Accurate cache size estimation
+      - Correct consistency model selection for each data type
+      - Appropriate cache eviction policy selection
+  completeness:
+    weight: 25
+    description: "Are all aspects of cache design covered?"
+    criteria:
+      - Read path and write path both defined
+      - Invalidation strategy covers all update scenarios
+      - Failure modes identified and mitigated
+      - Monitoring and alerting defined
+  architecture:
+    weight: 25
+    description: "Is the architecture well-structured?"
+    criteria:
+      - Clean separation between cache layer and application logic
+      - Well-defined cache key schema
+      - Graceful degradation paths documented
+  maintainability:
+    weight: 20
+    description: "Can the system be operated and evolved over time?"
+    criteria:
+      - Cache configuration externalized and environment-aware
+      - Cache key naming convention documented
+      - Operational runbooks referenced

@@ -1,8 +1,24 @@
+---
+name: testing
+version: 1.0.0
+category:
+  - testing
+  - quality
+dependencies:
+  - principles/engineering-principles.md
+  - standards/testing/testing.md
+  - standards/coding/general.md
+evaluation:
+  enabled: true
+  cases:
+    - testing-strategy
+---
+
 # Testing Skill
 
 **Purpose:** Design and implement a comprehensive testing strategy.
 
-**References:** [Engineering Principles](../principles/engineering-principles.md), [Testing Standards](../standards/testing/testing.md)
+**References:** [Engineering Principles](../../principles/engineering-principles.md), [Testing Standards](../../standards/testing/testing.md)
 
 ## Role
 

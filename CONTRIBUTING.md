@@ -16,20 +16,31 @@ Ensure your addition follows the separation of concerns:
 - **Skills** → AI instructions, not human documentation
 - **Adapters** → tool-specific formats, not duplicated content
 
-### 3. Maintain Consistency
+### 3. Skill Module Creation
+
+When creating or modifying a skill module under `skills/<name>/`:
+
+- `SKILL.md` must include YAML frontmatter with `name`, `version`, `category`, `dependencies`, and `evaluation` fields.
+- `CHANGELOG.md` tracks version history for that skill.
+- `eval.yaml` defines evaluation cases. Fields follow the standardized format: `id`, `skill`, `category`, `version`, `task`, `context`, `expected.must_include`, `expected.forbidden`, `scoring`.
+- Skill `version` follows semantic versioning independently of the repository version.
+- All eval.yaml files must pass `python evaluations/runner/run.py`.
+
+### 4. Maintain Consistency
 
 - Use the same heading structure as related files
 - Reference existing files with relative links
 - Keep language concise and unambiguous
 - Use active voice and imperative mood for rules
 
-### 4. Version Management
+### 5. Version Management
 
 Every skill change must:
 
-1. Update `CHANGELOG.md`
-2. Add or update evaluation cases in `evaluations/`
-3. Run evaluations to check for regression
+1. Update the skill's `CHANGELOG.md` and the root `CHANGELOG.md`
+2. Add or update evaluation cases in `evaluations/cases/`
+3. Run `python evaluations/runner/run.py` to validate evaluation structure
+4. Verify scoring weights sum to 100 per case
 
 ### 5. Pull Request Process
 

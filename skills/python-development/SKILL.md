@@ -1,8 +1,27 @@
+---
+name: python-development
+version: 1.0.0
+category:
+  - coding
+  - python
+dependencies:
+  - principles/engineering-principles.md
+  - standards/coding/general.md
+  - standards/coding/python.md
+  - standards/testing/testing.md
+  - patterns/ai-agent/architecture.md
+  - patterns/ai-agent/tool-use.md
+evaluation:
+  enabled: true
+  cases:
+    - python-refactor
+---
+
 # Python Development Skill
 
 **Purpose:** Write production-quality Python code.
 
-**References:** [Engineering Principles](../principles/engineering-principles.md), [Python Coding Standards](../standards/coding/python.md), [General Coding Standards](../standards/coding/general.md)
+**References:** [Engineering Principles](../../principles/engineering-principles.md), [Python Coding Standards](../../standards/coding/python.md), [General Coding Standards](../../standards/coding/general.md)
 
 ## Role
 

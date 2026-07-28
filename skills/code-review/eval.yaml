@@ -1,0 +1,53 @@
+---
+id: code-review-detect
+skill: code-review
+category: coding
+version: "1.0.0"
+task: "Review the provided Python code for issues. Identify all bugs, security vulnerabilities, performance problems, and maintainability concerns. For each finding, classify its severity (blocking, important, suggestion) and provide a concrete fix."
+context:
+  - "This is a Flask web application handling e-commerce checkout"
+  - "get_product_price calls an internal pricing service"
+  - "The code runs in production with access to sensitive user data"
+  - "Python 3.11, Flask 3.0"
+expected:
+  must_include:
+    - All critical security issues (insecure deserialization, SQL injection, debug mode in production)
+    - Bug detection with accurate diagnosis (silent exception handling, missing error handling)
+    - Performance concerns (N+1-like patterns, inefficient data storage)
+    - Maintainability issues (no logging, no type hints, poor error handling)
+    - Severity classification appropriate to each finding
+    - Concrete, correct fix suggestions for each finding
+  forbidden:
+    - Missing critical security issues (SQL injection, pickle, debug mode)
+    - Flagging non-issues as problems without justification
+    - Vague recommendations without specific fixes
+    - Not distinguishing between blocking and minor issues
+scoring:
+  correctness:
+    weight: 35
+    description: "Are the identified issues real and correctly diagnosed?"
+    criteria:
+      - All critical security issues identified (pickle, SQL injection, debug mode)
+      - Bug detection is accurate (silent exception handling, missing error handling)
+      - No false positives (flagging correct code as problematic)
+  completeness:
+    weight: 25
+    description: "How comprehensive is the review across all dimensions?"
+    criteria:
+      - Security, correctness, performance, and maintainability all covered
+      - All code paths and edge cases considered
+      - Both obvious and subtle issues identified
+  architecture:
+    weight: 20
+    description: "Is the review report clear and well-organized?"
+    criteria:
+      - Findings are clearly described with location references
+      - Severity classification is appropriate and consistent
+      - Fix suggestions are concrete and correct
+  maintainability:
+    weight: 20
+    description: "Are the recommendations practical and implementable?"
+    criteria:
+      - Fix suggestions account for production constraints
+      - Recommendations are prioritized by impact
+      - Effort estimate is realistic

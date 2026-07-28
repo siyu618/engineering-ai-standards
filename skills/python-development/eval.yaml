@@ -1,0 +1,59 @@
+---
+id: python-refactor
+skill: python-development
+category: coding
+version: "1.0.0"
+task: "Refactor the following Python function to be more maintainable, testable, and type-safe. The function processes order data from a legacy system. Add proper error handling, logging, and unit tests. Do not change the external behavior."
+context:
+  - "get_price(product_id) is an external API call that can timeout or fail"
+  - "save(item) is a database write operation"
+  - "The function is called from a background job processing 10,000 orders per batch"
+  - "A single failure should not crash the entire batch"
+  - "The team wants to add retry logic, monitoring, and alerting"
+  - "Target Python 3.11+"
+expected:
+  must_include:
+    - Type hints on all public functions and data structures
+    - Error handling with specific exceptions for API timeouts and DB errors
+    - Structured logging with correlation IDs
+    - Unit tests with proper mocking of external dependencies
+    - Separation of concerns: monolithic function split into focused components
+    - Retry with backoff for external API calls
+    - Error isolation: one failure should not stop the entire batch
+  forbidden:
+    - Omitting type annotations
+    - Swallowing exceptions without handling or logging
+    - Changing the external contract or output format
+    - Not providing tests for the refactored code
+    - Adding unnecessary abstractions or complexity
+scoring:
+  correctness:
+    weight: 30
+    description: "Does the refactored code produce the same output?"
+    criteria:
+      - Output matches original for all input cases
+      - Error handling covers all documented failure modes
+      - Tests pass and cover edge cases
+  completeness:
+    weight: 20
+    description: "Are all required aspects covered?"
+    criteria:
+      - Type hints on all functions and data structures
+      - Logging with appropriate context
+      - Unit tests with mocked dependencies
+      - Integration test guidance
+  architecture:
+    weight: 30
+    description: "Is the refactored code well-structured and maintainable?"
+    criteria:
+      - Functions have single responsibility
+      - Type annotations are correct and complete
+      - Naming is clear and intent-revealing
+      - No dead code or unnecessary complexity
+  maintainability:
+    weight: 20
+    description: "Can the code be easily extended and tested in the future?"
+    criteria:
+      - Dependencies are injectable/testable
+      - Error handling is consistent
+      - Configuration is externalized
