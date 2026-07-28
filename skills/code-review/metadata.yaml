@@ -1,0 +1,17 @@
+---
+name: code-review
+version: 1.0.0
+category:
+  - review
+  - quality
+dependencies:
+  - principles/engineering-principles.md
+  - standards/coding/general.md
+  - standards/testing/testing.md
+  - patterns/ai-agent/architecture.md
+evaluation:
+  enabled: true
+  threshold: 85
+  cases:
+    - code-review-detect
+---

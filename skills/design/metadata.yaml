@@ -1,0 +1,19 @@
+---
+name: design
+version: 1.0.0
+category:
+  - architecture
+  - system-design
+dependencies:
+  - principles/engineering-principles.md
+  - standards/architecture/system-design.md
+  - patterns/distributed-system/consistency.md
+  - patterns/cache/cache-aside.md
+evaluation:
+  enabled: true
+  threshold: 85
+  cases:
+    - cache-design
+    - wallet-system
+    - agent-design
+---

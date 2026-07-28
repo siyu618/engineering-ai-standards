@@ -1,0 +1,16 @@
+---
+name: testing
+version: 1.0.0
+category:
+  - testing
+  - quality
+dependencies:
+  - principles/engineering-principles.md
+  - standards/testing/testing.md
+  - standards/coding/general.md
+evaluation:
+  enabled: true
+  threshold: 80
+  cases:
+    - testing-strategy
+---

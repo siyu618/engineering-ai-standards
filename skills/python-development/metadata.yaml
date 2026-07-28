@@ -1,0 +1,19 @@
+---
+name: python-development
+version: 1.0.0
+category:
+  - coding
+  - python
+dependencies:
+  - principles/engineering-principles.md
+  - standards/coding/general.md
+  - standards/coding/python.md
+  - standards/testing/testing.md
+  - patterns/ai-agent/architecture.md
+  - patterns/ai-agent/tool-use.md
+evaluation:
+  enabled: true
+  threshold: 80
+  cases:
+    - python-refactor
+---

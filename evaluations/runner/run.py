@@ -6,6 +6,7 @@ Usage:
     python evaluations/runner/run.py              # Validate all cases
     python evaluations/runner/run.py --case NAME  # Validate a single case
     python evaluations/runner/run.py --verbose     # Detailed output
+    python evaluations/runner/run.py --registry    # Also validate registry consistency
 """
 
 import argparse
@@ -18,6 +19,7 @@ import yaml
 REQUIRED_FIELDS = ["id", "skill", "category", "version", "task", "expected", "scoring"]
 SCORING_DIMENSIONS = ["correctness", "completeness", "architecture", "maintainability"]
 CASES_DIR = os.path.join(os.path.dirname(__file__), "..", "cases")
+REGISTRY_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "registry", "skills.yaml")
 
 
 def load_cases(case_filter: str | None = None) -> list[dict]:
@@ -42,6 +44,15 @@ def load_cases(case_filter: str | None = None) -> list[dict]:
                 print(f"❌ PARSE ERROR: {f}: {e}")
                 sys.exit(1)
     return cases
+
+
+def load_registry() -> dict:
+    """Load the skill registry. Returns empty dict if registry doesn't exist."""
+    if not os.path.exists(REGISTRY_PATH):
+        return {}
+    with open(REGISTRY_PATH) as f:
+        data = yaml.safe_load(f)
+    return data.get("skills", {})
 
 
 def validate_case(case: dict) -> list[str]:
@@ -96,10 +107,38 @@ def validate_case(case: dict) -> list[str]:
     return errors
 
 
+def validate_registry_consistency(registry: dict, cases: list[dict]) -> list[str]:
+    """Check that registry skills match evaluation cases."""
+    warnings = []
+    registry_skills = set(registry.keys())
+    case_skills = set(c.get("skill", "?") for c in cases)
+
+    for s in case_skills:
+        if s not in registry_skills:
+            skills_dir = os.path.join(os.path.dirname(__file__), "..", "..", "skills", s)
+            if os.path.isdir(skills_dir):
+                warnings.append(f"⚠️  Skill '{s}' has eval cases but is not listed in registry/skills.yaml")
+            else:
+                warnings.append(f"❌ Skill '{s}' referenced in eval cases but not found in skills/ or registry")
+
+    for s in registry_skills:
+        reg = registry[s]
+        ev = reg.get("evaluation", {})
+        if ev.get("enabled", False):
+            registered_cases = set(ev.get("cases", []))
+            existing_case_ids = set(c.get("id", "") for c in cases)
+            missing = registered_cases - existing_case_ids
+            if missing:
+                warnings.append(f"⚠️  Registry skill '{s}' references missing eval cases: {missing}")
+
+    return warnings
+
+
 def main():
     parser = argparse.ArgumentParser(description="Validate evaluation case definitions.")
     parser.add_argument("--case", help="Only validate cases containing this string in path")
     parser.add_argument("--verbose", action="store_true", help="Show detailed output")
+    parser.add_argument("--registry", action="store_true", help="Also validate registry consistency")
     args = parser.parse_args()
 
     cases = load_cases(args.case)
@@ -131,14 +170,29 @@ def main():
                 forbid_count = len(case.get("expected", {}).get("forbidden", []))
                 print(f"   Expected: {must_count} must-include, {forbid_count} forbidden")
 
+    # Registry consistency check
+    if args.registry:
+        registry = load_registry()
+        if registry:
+            warnings = validate_registry_consistency(registry, cases)
+            if warnings:
+                print()
+                print("📋 Registry consistency:")
+                for w in warnings:
+                    if w.startswith("❌"):
+                        total_errors += 1
+                    else:
+                        total_warnings += 1
+                    print(f"   {w}")
+
     print()
     print("=" * 50)
 
     if total_errors:
-        print(f"❌ {total_errors} validation error(s) found")
+        print(f"❌ {total_errors} validation error(s), {total_warnings} warning(s) found")
         sys.exit(1)
     else:
-        print(f"✅ All {len(cases)} evaluation case(s) valid")
+        print(f"✅ All {len(cases)} evaluation case(s) valid ({total_warnings} warning(s))")
         sys.exit(0)
 
 

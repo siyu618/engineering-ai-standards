@@ -1,0 +1,58 @@
+---
+id: wallet-system
+skill: design
+category: system-design
+version: "1.0.0"
+task: "Design a digital wallet system that supports deposits, withdrawals, and transfers between users. The system must handle 10,000 transactions per second with 99.999 percent accuracy. No transaction can be lost or duplicated. The system must provide real-time balance queries and transaction history. Design for a global user base with multi-region deployment."
+context:
+  - "50 million active wallets"
+  - "Peak throughput: 10,000 TPS"
+  - "Consistency requirement: strong consistency for balance operations"
+  - "Latency requirement: p99 under 100ms for balance queries, p99 under 500ms for transactions"
+  - "Compliance: audit trail for all transactions, 7-year retention"
+  - "Team operates in AWS with multi-region capability"
+  - "Budget: $50,000 per month for infrastructure"
+expected:
+  must_include:
+    - Idempotency key mechanism for all transaction operations
+    - Strong consistency for balance operations across regions
+    - Transaction and balance data model design
+    - Handling of partial failures, network partitions, and race conditions
+    - Horizontal scaling of transaction processing
+    - Comprehensive audit trail design
+    - Daily and monthly reconciliation process
+  forbidden:
+    - Failing to handle duplicate transaction requests
+    - Using eventual consistency for balance operations
+    - Ignoring multi-region deployment requirements
+    - Omitting audit trail design
+scoring:
+  correctness:
+    weight: 35
+    description: "Are the consistency and idempotency mechanisms correct?"
+    criteria:
+      - Correct idempotency key generation and lifecycle
+      - Strong consistency mechanism is feasible and correct
+      - No double-spend or lost transaction scenarios
+  completeness:
+    weight: 25
+    description: "Are all operations, failure modes, and operational procedures covered?"
+    criteria:
+      - Deposit, withdrawal, and transfer flows defined
+      - Reconciliation process designed
+      - Error scenarios documented for each operation
+      - Compliance requirements addressed
+  architecture:
+    weight: 25
+    description: "Is the architecture appropriate for the scale and consistency requirements?"
+    criteria:
+      - Clear component boundaries and responsibilities
+      - Appropriate use of database, queue, and cache technologies
+      - Multi-region strategy is practical and tested
+  maintainability:
+    weight: 15
+    description: "Can the system be operated and debugged in production?"
+    criteria:
+      - Observability (metrics, logs, traces) designed in
+      - Deployment and rollback strategy defined
+      - Operational runbooks referenced

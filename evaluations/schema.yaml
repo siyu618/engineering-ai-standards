@@ -73,6 +73,13 @@ evaluation_case:
       type: object
       description: "Scoring dimensions and weights."
       required: true
+      additional_fields:
+        threshold:
+          type: integer
+          description: "Minimum passing overall score (0-100)."
+          minimum: 0
+          maximum: 100
+          required: false
       fields:
         correctness:
           type: object

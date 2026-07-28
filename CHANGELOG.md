@@ -5,6 +5,40 @@ All notable changes to this repository are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] - 2026-07-28
+
+### Added
+
+- `registry/skills.yaml` — Central machine-readable skill registry with versions, owners, dependencies, and evaluation thresholds
+- `skills/*/metadata.yaml` — Per-skill metadata extracted from SKILL.md frontmatter
+- `skills/*/examples/` — Usage examples for each skill (payment system design, refactoring, test strategy, review output, support agent)
+- `skills/*/eval/` — Restructured evaluation directory with separate files per case and per-skill README
+- `workflows/` — Workflow orchestration layer composing multiple skills:
+  - `feature-development.md` — Feature development lifecycle
+  - `bug-fix.md` — Bug fix process
+  - `architecture-review.md` — Architecture review workflow
+  - `production-incident.md` — Incident response workflow
+- `governance/` — Governance layer:
+  - `ownership.md` — Skill ownership table and responsibilities
+  - `review-policy.md` — Change classification (patch/minor/major/breaking) with review requirements
+  - `release-process.md` — Semantic versioning and release checklist
+- `docs/adr/004-skill-registry.md` — ADR for centralized registry
+- `docs/adr/005-governance-model.md` — ADR for governance model
+- `.github/workflows/markdown-validation.yml` — Renamed from validate.yml, updated for new directories
+- `.github/workflows/skill-evaluation.yml` — Renamed from evaluate.yml, enhanced with changed-skill detection, registry validation, and metadata checks
+
+### Changed
+
+- `evaluations/runner/run.py` — Added `--registry` flag for registry consistency validation
+- `evaluations/schema.yaml` — Added `threshold` field support
+- `README.md` — Updated architecture diagram and repository structure for v1.3 layers
+- `AGENTS.md` — Updated architecture line to include Workflows and Governance
+- `CONTRIBUTING.md` — Added workflow and governance sections
+- Skills enriched: each module now has metadata.yaml, examples/, and eval/ subdirectory
+- CI workflows renamed for clarity (validate.yml → markdown-validation.yml, evaluate.yml → skill-evaluation.yml)
+
+## [1.2.0] - 2026-07-28
+
 ## [1.2.0] - 2026-07-28
 
 ### Added

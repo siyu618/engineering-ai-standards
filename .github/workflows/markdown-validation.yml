@@ -1,4 +1,4 @@
-name: Validate
+name: Markdown Validation
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ jobs:
 
       - name: Verify required directories exist
         run: |
-          for dir in principles standards/coding standards/testing standards/architecture patterns skills adapters evaluations/cases evaluations/runner templates docs/adr; do
+          for dir in principles standards/coding standards/testing standards/architecture patterns skills adapters evaluations/cases evaluations/runner templates docs/adr workflows registry governance; do
             if [ ! -d "$dir" ]; then
               echo "Missing required directory: $dir"
               exit 1
@@ -51,6 +51,8 @@ jobs:
             adapters/**/*.md
             templates/**/*.md
             docs/**/*.md
+            workflows/**/*.md
+            governance/**/*.md
           config: |
             {
               "MD013": { "line_length": 120 },

@@ -1,0 +1,18 @@
+---
+name: ai-agent-development
+version: 1.0.0
+category:
+  - ai
+  - agent
+dependencies:
+  - principles/engineering-principles.md
+  - patterns/ai-agent/architecture.md
+  - patterns/ai-agent/memory.md
+  - patterns/ai-agent/tool-use.md
+  - patterns/ai-agent/evaluation.md
+evaluation:
+  enabled: true
+  threshold: 80
+  cases:
+    - ai-agent-eval-design
+---

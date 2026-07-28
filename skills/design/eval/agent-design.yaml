@@ -1,0 +1,58 @@
+---
+id: agent-design
+skill: design
+category: system-design
+version: "1.0.0"
+task: "Design an AI coding assistant agent that helps developers with code reviews, bug fixes, and refactoring in a large monorepo. The agent must have access to the codebase, issue tracker, and test infrastructure. Design the agent architecture, memory system, tool set, and evaluation framework. Consider safety, observability, and scalability to 1,000 developers."
+context:
+  - "Monorepo with over 500 services and 10 million lines of code"
+  - "1,000 active developers"
+  - "Over 200 daily code reviews"
+  - "Integration with GitHub, Jira, and Jenkins"
+  - "Security requirements: no code exfiltration, no unauthorized changes"
+  - "Agent must run within the corporate network"
+  - "Budget: 10 million tokens per day"
+expected:
+  must_include:
+    - Agent architecture with clear component separation
+    - Working, episodic, and semantic memory system design
+    - Tool set design with safety controls
+    - Guardrails, human-in-the-loop, and access controls
+    - Comprehensive monitoring, logging, and tracing
+    - Evaluation framework to measure agent performance
+    - Scalability design for 1,000 concurrent users
+  forbidden:
+    - Ignoring security and safety requirements
+    - Omitting monitoring and logging
+    - Not designing evaluation mechanism
+    - Giving agent unrestricted access to the codebase
+scoring:
+  correctness:
+    weight: 30
+    description: "Are the design decisions technically sound and safe?"
+    criteria:
+      - Agent architecture follows established patterns
+      - Memory system correctly addresses the three memory types
+      - Safety mechanisms prevent unauthorized actions
+  completeness:
+    weight: 25
+    description: "Are all required aspects of the agent system covered?"
+    criteria:
+      - All agent components (memory, tools, planning) designed
+      - Integration with external systems defined
+      - Deployment and scaling strategy documented
+      - Error handling for each component
+  architecture:
+    weight: 25
+    description: "Is the agent architecture well-structured and maintainable?"
+    criteria:
+      - Clean separation between agent components
+      - Tool definitions are well-scoped
+      - Evaluation framework is integrated, not bolted on
+  maintainability:
+    weight: 20
+    description: "Can the agent be improved and operated over time?"
+    criteria:
+      - Prompt versioning strategy defined
+      - Evaluation regression detection in place
+      - Operational runbooks for common failures

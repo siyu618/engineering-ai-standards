@@ -1,0 +1,76 @@
+# Skill Registry
+# Central machine-readable index of all engineering skills.
+# This is the source of truth for automation. SKILL.md frontmatter and
+# metadata.yaml are local convenience copies for human readers.
+
+version: "1.0.0"
+updated: 2026-07-28
+
+skills:
+
+  design:
+    version: 1.0.0
+    owner: architecture-team
+    status: stable
+    dependencies:
+      - standards/architecture/system-design.md
+      - patterns/distributed-system/consistency.md
+      - patterns/cache/cache-aside.md
+    evaluation:
+      enabled: true
+      threshold: 85
+      cases:
+        - cache-design
+        - wallet-system
+        - agent-design
+
+  python-development:
+    version: 1.0.0
+    owner: backend-team
+    status: stable
+    dependencies:
+      - standards/coding/python.md
+      - standards/coding/general.md
+    evaluation:
+      enabled: true
+      threshold: 80
+      cases:
+        - python-refactor
+
+  testing:
+    version: 1.0.0
+    owner: qa-team
+    status: stable
+    dependencies:
+      - standards/testing/testing.md
+    evaluation:
+      enabled: true
+      threshold: 80
+      cases:
+        - testing-strategy
+
+  code-review:
+    version: 1.0.0
+    owner: architecture-team
+    status: stable
+    dependencies:
+      - standards/coding/general.md
+    evaluation:
+      enabled: true
+      threshold: 85
+      cases:
+        - code-review-detect
+
+  ai-agent-development:
+    version: 1.0.0
+    owner: ai-platform-team
+    status: stable
+    dependencies:
+      - patterns/ai-agent/architecture.md
+      - patterns/ai-agent/memory.md
+      - patterns/ai-agent/tool-use.md
+    evaluation:
+      enabled: true
+      threshold: 80
+      cases:
+        - ai-agent-eval-design
