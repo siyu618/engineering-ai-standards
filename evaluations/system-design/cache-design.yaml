@@ -1,0 +1,76 @@
+name: cache-design
+category: system-design
+version: "1.0.0"
+description: Evaluate the AI agent's ability to design a caching system for a read-heavy API.
+
+task: >
+  Design a caching layer for a social media API that serves user profiles. The API receives
+  100,000 reads per second and 1,000 writes per second. User profiles are ~5KB each and
+  there are 10 million active users. The cache must reduce database load by at least 90%.
+  Consider consistency requirements, cache invalidation, failure modes, and monitoring.
+
+context:
+  - Read-to-write ratio: 100:1
+  - Target cache hit rate: >95%
+  - Acceptable staleness: up to 5 minutes for non-critical fields
+  - Critical fields (account status, privacy settings) must be strongly consistent
+  - Current database: PostgreSQL with read replicas
+  - Cache budget: $500/month for cache infrastructure
+  - Team has operational experience with Redis and Memcached
+
+expected_capabilities:
+  - capacity_estimation: Calculate cache size, memory requirements, and cost
+  - cache_aside: Implement the cache-aside pattern correctly
+  - consistency: Handle consistency between cache and database for both critical and non-critical data
+  - invalidation: Design cache invalidation strategy (TTL, write-through, event-based)
+  - failure_handling: Handle cache breakdown, penetration, and avalanche
+  - monitoring: Define cache monitoring metrics and alerting
+  - trade_off_analysis: Compare alternatives and justify decisions
+
+forbidden_behaviors:
+  - no_consistency_handling: Failing to address consistency between cache and database
+  - no_failure_analysis: Not considering cache failure scenarios
+  - unrealistic_assumptions: Assuming infinite cache or zero network latency
+  - no_monitoring: Omitting observability for cache performance
+
+scoring:
+  correctness:
+    weight: 30
+    description: >
+      Are the cache design decisions technically correct? Is the capacity calculation
+      accurate? Are the consistency guarantees appropriate?
+    criteria:
+      - Accurate cache size estimation
+      - Correct consistency model selection for each data type
+      - Appropriate cache eviction policy selection
+
+  completeness:
+    weight: 25
+    description: >
+      Are all aspects of cache design covered? Read/write paths, invalidation, failure modes,
+      monitoring, and operations.
+    criteria:
+      - Read path and write path both defined
+      - Invalidation strategy covers all update scenarios
+      - Failure modes identified and mitigated
+      - Monitoring and alerting defined
+
+  architecture_quality:
+    weight: 25
+    description: >
+      Is the architecture well-structured? Are components clearly separated? Are interfaces
+      well-defined?
+    criteria:
+      - Clean separation between cache layer and application logic
+      - Well-defined cache key schema
+      - Graceful degradation paths documented
+
+  maintainability:
+    weight: 20
+    description: >
+      Can the system be operated and evolved over time? Is configuration externalized?
+      Are operational procedures documented?
+    criteria:
+      - Cache configuration externalized and environment-aware
+      - Cache key naming convention documented
+      - Operational runbooks referenced

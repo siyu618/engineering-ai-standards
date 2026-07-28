@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: initial release of Engineering AI Standards v1.0.0 *)"
+    ]
+  }
+}

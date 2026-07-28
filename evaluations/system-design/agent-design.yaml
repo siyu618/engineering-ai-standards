@@ -1,0 +1,74 @@
+name: agent-design
+category: system-design
+version: "1.0.0"
+description: Evaluate the AI agent's ability to design an AI agent system with memory, tools, and evaluation.
+
+task: >
+  Design an AI coding assistant agent that helps developers with code reviews, bug fixes,
+  and refactoring in a large monorepo. The agent must have access to the codebase, issue
+  tracker, and test infrastructure. Design the agent's architecture, memory system, tool
+  set, and evaluation framework. Consider safety, observability, and scalability to
+  1,000 developers.
+
+context:
+  - Monorepo with 500+ services and 10M+ lines of code
+  - 1,000 active developers
+  - 200+ daily code reviews
+  - Integration with GitHub, Jira, and Jenkins
+  - Security requirements: no code exfiltration, no unauthorized changes
+  - Agent must run within the corporate network (no external API calls to non-approved endpoints)
+  - Budget: 10 million tokens per day
+
+expected_capabilities:
+  - architecture: Design agent architecture with clear component separation
+  - memory: Design working, episodic, and semantic memory systems
+  - tools: Design appropriate tool set with safety controls
+  - safety: Implement guardrails, human-in-the-loop, and access controls
+  - observability: Design comprehensive monitoring, logging, and tracing
+  - evaluation: Design evaluation framework to measure agent performance
+  - scalability: Design for handling 1,000 concurrent users
+
+forbidden_behaviors:
+  - no_safety: Ignoring security and safety requirements
+  - no_observability: Omitting monitoring and logging
+  - no_evaluation: Not designing evaluation mechanism
+  - unbounded_access: Giving agent unrestricted access to the codebase
+
+scoring:
+  correctness:
+    weight: 30
+    description: >
+      Are the design decisions technically sound? Are the safety mechanisms effective?
+      Is the memory system appropriate for the use case?
+    criteria:
+      - Agent architecture follows established patterns
+      - Memory system correctly addresses the three memory types
+      - Safety mechanisms prevent unauthorized actions
+
+  completeness:
+    weight: 25
+    description: >
+      Are all required aspects of the agent system covered?
+    criteria:
+      - All agent components (memory, tools, planning) designed
+      - Integration with external systems defined
+      - Deployment and scaling strategy documented
+      - Error handling for each component
+
+  architecture_quality:
+    weight: 25
+    description: >
+      Is the agent architecture well-structured and maintainable?
+    criteria:
+      - Clean separation between agent components
+      - Tool definitions are well-scoped
+      - Evaluation framework is integrated, not bolted on
+
+  maintainability:
+    weight: 20
+    description: >
+      Can the agent be improved and operated over time?
+    criteria:
+      - Prompt versioning strategy defined
+      - Evaluation regression detection in place
+      - Operational runbooks for common failures

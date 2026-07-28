@@ -1,0 +1,73 @@
+name: wallet-system
+category: system-design
+version: "1.0.0"
+description: Evaluate the AI agent's ability to design a digital wallet system with strong consistency and idempotency requirements.
+
+task: >
+  Design a digital wallet system that supports deposits, withdrawals, and transfers between
+  users. The system must handle 10,000 transactions per second with 99.999% accuracy.
+  No transaction can be lost or duplicated. The system must provide real-time balance
+  queries and transaction history. Design for a global user base with multi-region deployment.
+
+context:
+  - 50 million active wallets
+  - Peak throughput: 10,000 TPS
+  - Consistency requirement: strong consistency for balance operations
+  - Latency requirement: p99 < 100ms for balance queries, p99 < 500ms for transactions
+  - Compliance: audit trail for all transactions, 7-year retention
+  - Team operates in AWS with multi-region capability
+  - Budget: $50,000/month for infrastructure
+
+expected_capabilities:
+  - idempotency: Design idempotency key mechanism for all transaction operations
+  - consistency: Ensure strong consistency for balance operations across regions
+  - data_modeling: Design the transaction and balance data model
+  - failure_handling: Handle partial failures, network partitions, and race conditions
+  - scalability: Design for horizontal scaling of transaction processing
+  - audit: Design comprehensive audit trail
+  - reconciliation: Design daily/monthly reconciliation process
+
+forbidden_behaviors:
+  - no_idempotency: Failing to handle duplicate transaction requests
+  - weak_consistency: Using eventual consistency for balance operations
+  - single_region: Ignoring multi-region deployment requirements
+  - no_audit: Omitting audit trail design
+
+scoring:
+  correctness:
+    weight: 35
+    description: >
+      Are the consistency and idempotency mechanisms correct? Is the data model accurate?
+      Are the failure scenarios properly handled?
+    criteria:
+      - Correct idempotency key generation and lifecycle
+      - Strong consistency mechanism is feasible and correct
+      - No double-spend or lost transaction scenarios
+
+  completeness:
+    weight: 25
+    description: >
+      Are all operations, failure modes, and operational procedures covered?
+    criteria:
+      - Deposit, withdrawal, and transfer flows defined
+      - Reconciliation process designed
+      - Error scenarios documented for each operation
+      - Compliance requirements addressed
+
+  architecture_quality:
+    weight: 25
+    description: >
+      Is the architecture appropriate for the scale and consistency requirements?
+    criteria:
+      - Clear component boundaries and responsibilities
+      - Appropriate use of database, queue, and cache technologies
+      - Multi-region strategy is practical and tested
+
+  maintainability:
+    weight: 15
+    description: >
+      Can the system be operated and debugged in production?
+    criteria:
+      - Observability (metrics, logs, traces) designed in
+      - Deployment and rollback strategy defined
+      - Operational runbooks referenced

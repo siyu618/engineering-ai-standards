@@ -1,0 +1,95 @@
+name: python-refactor
+category: coding
+version: "1.0.0"
+description: Evaluate the AI agent's ability to refactor Python code for maintainability, type safety, and testability.
+
+task: >
+  Refactor the following Python function to be more maintainable, testable, and type-safe.
+  The function processes order data from a legacy system. Add proper error handling,
+  logging, and unit tests. Do not change the external behavior.
+
+  ```python
+  def process_orders(data):
+      results = []
+      for item in data:
+          if item['status'] == 'pending':
+              total = 0
+              for product in item['products']:
+                  price = get_price(product['id'])
+                  if product['quantity'] > 0:
+                      total += price * product['quantity']
+              if total > 0:
+                  item['total'] = total
+                  item['status'] = 'processed'
+                  save(item)
+                  results.append({'id': item['id'], 'total': total, 'status': 'ok'})
+              else:
+                  results.append({'id': item['id'], 'error': 'zero total'})
+          elif item['status'] == 'cancelled':
+              results.append({'id': item['id'], 'status': 'skipped'})
+      return results
+  ```
+
+context:
+  - `get_price(product_id)` is an external API call that can timeout or fail
+  - `save(item)` is a database write operation
+  - The function is called from a background job processing 10,000 orders per batch
+  - A single failure should not crash the entire batch
+  - The team wants to add retry logic, monitoring, and alerting
+  - Target Python 3.11+
+
+expected_capabilities:
+  - type_hints: Add proper type annotations to all functions
+  - error_handling: Handle API timeouts, database errors, and data integrity issues
+  - logging: Add structured logging with correlation IDs
+  - testing: Write unit tests with proper mocking
+  - separation_of_concerns: Split the monolithic function into focused components
+  - retry: Implement retry with backoff for external API calls
+  - error_isolation: Isolate failures per order (one failure should not stop the batch)
+
+forbidden_behaviors:
+  - no_type_hints: Omitting type annotations
+  - silent_errors: Swallowing exceptions without handling or logging
+  - breaking_behavior: Changing the external contract or output format
+  - no_tests: Not providing test coverage for the refactored code
+  - over_engineering: Adding unnecessary abstractions or complexity
+
+scoring:
+  correctness:
+    weight: 30
+    description: >
+      Does the refactored code produce the same output? Are the error handling and retry
+      logic correct? Do the tests pass?
+    criteria:
+      - Output matches original for all input cases
+      - Error handling covers all documented failure modes
+      - Tests pass and cover edge cases
+
+  code_quality:
+    weight: 30
+    description: >
+      Is the refactored code well-structured, readable, and maintainable?
+    criteria:
+      - Functions have single responsibility
+      - Type annotations are correct and complete
+      - Naming is clear and intent-revealing
+      - No dead code or unnecessary complexity
+
+  completeness:
+    weight: 20
+    description: >
+      Are all required aspects covered (type hints, error handling, logging, tests)?
+    criteria:
+      - Type hints on all functions and data structures
+      - Logging with appropriate context
+      - Unit tests with mocked dependencies
+      - Integration test guidance
+
+  maintainability:
+    weight: 20
+    description: >
+      Can the code be easily extended and tested in the future?
+    criteria:
+      - Dependencies are injectable/testable
+      - Error handling is consistent
+      - Configuration is externalized
