@@ -1,17 +1,21 @@
 # Skill Registry
 # Central machine-readable index of all engineering skills.
-# This is the source of truth for automation. SKILL.md frontmatter and
-# metadata.yaml are local convenience copies for human readers.
+# This is the source of truth for automation.
 
 version: "1.0.0"
 updated: 2026-07-28
 
 skills:
 
+  # Established skills (v1.0-v1.3)
   design:
     version: 1.0.0
     owner: architecture-team
     status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
     dependencies:
       - standards/architecture/system-design.md
       - patterns/distributed-system/consistency.md
@@ -19,6 +23,8 @@ skills:
     evaluation:
       enabled: true
       threshold: 85
+      latest_score: null
+      last_run: null
       cases:
         - cache-design
         - wallet-system
@@ -28,12 +34,18 @@ skills:
     version: 1.0.0
     owner: backend-team
     status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
     dependencies:
       - standards/coding/python.md
       - standards/coding/general.md
     evaluation:
       enabled: true
       threshold: 80
+      latest_score: null
+      last_run: null
       cases:
         - python-refactor
 
@@ -41,11 +53,17 @@ skills:
     version: 1.0.0
     owner: qa-team
     status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
     dependencies:
       - standards/testing/testing.md
     evaluation:
       enabled: true
       threshold: 80
+      latest_score: null
+      last_run: null
       cases:
         - testing-strategy
 
@@ -53,11 +71,17 @@ skills:
     version: 1.0.0
     owner: architecture-team
     status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
     dependencies:
       - standards/coding/general.md
     evaluation:
       enabled: true
       threshold: 85
+      latest_score: null
+      last_run: null
       cases:
         - code-review-detect
 
@@ -65,6 +89,10 @@ skills:
     version: 1.0.0
     owner: ai-platform-team
     status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
     dependencies:
       - patterns/ai-agent/architecture.md
       - patterns/ai-agent/memory.md
@@ -72,5 +100,171 @@ skills:
     evaluation:
       enabled: true
       threshold: 80
+      latest_score: null
+      last_run: null
       cases:
         - ai-agent-eval-design
+
+  # Architecture-level skills (v1.4)
+  system-design:
+    version: 1.0.0
+    owner: architecture-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
+    dependencies:
+      - standards/architecture/system-design.md
+      - patterns/distributed-system/consistency.md
+    evaluation:
+      enabled: false
+
+  distributed-system:
+    version: 1.0.0
+    owner: architecture-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
+    dependencies:
+      - patterns/distributed-system/consistency.md
+      - patterns/distributed-system/idempotency.md
+      - patterns/distributed-system/retry.md
+    evaluation:
+      enabled: false
+
+  database-design:
+    version: 1.0.0
+    owner: architecture-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
+    dependencies:
+      - standards/architecture/system-design.md
+    evaluation:
+      enabled: false
+
+  api-design:
+    version: 1.0.0
+    owner: architecture-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
+    dependencies:
+      - standards/architecture/system-design.md
+    evaluation:
+      enabled: false
+
+  security-review:
+    version: 1.0.0
+    owner: security-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: false
+      copilot: false
+    dependencies:
+      - principles/engineering-principles.md
+    evaluation:
+      enabled: false
+
+  production-readiness:
+    version: 1.0.0
+    owner: platform-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
+    dependencies:
+      - patterns/distributed-system/retry.md
+    evaluation:
+      enabled: false
+
+  incident-response:
+    version: 1.0.0
+    owner: platform-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: false
+      copilot: false
+    dependencies:
+      - standards/architecture/system-design.md
+    evaluation:
+      enabled: false
+
+  ai-agent-design:
+    version: 1.0.0
+    owner: ai-platform-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
+    dependencies:
+      - patterns/ai-agent/architecture.md
+      - patterns/ai-agent/memory.md
+      - patterns/ai-agent/tool-use.md
+    evaluation:
+      enabled: false
+
+  rag-design:
+    version: 1.0.0
+    owner: ai-platform-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: false
+    dependencies:
+      - patterns/ai-agent/architecture.md
+    evaluation:
+      enabled: false
+
+  mcp-development:
+    version: 1.0.0
+    owner: ai-platform-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: false
+      copilot: false
+    dependencies:
+      - patterns/ai-agent/architecture.md
+      - patterns/ai-agent/tool-use.md
+    evaluation:
+      enabled: false
+
+  llm-evaluation:
+    version: 1.0.0
+    owner: ai-platform-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: false
+    dependencies:
+      - patterns/ai-agent/evaluation.md
+    evaluation:
+      enabled: false
+
+  agent-memory:
+    version: 1.0.0
+    owner: ai-platform-team
+    status: stable
+    compatibility:
+      claude: true
+      cursor: true
+      copilot: true
+    dependencies:
+      - patterns/ai-agent/memory.md
+      - patterns/ai-agent/architecture.md
+    evaluation:
+      enabled: false

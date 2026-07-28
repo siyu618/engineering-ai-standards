@@ -18,8 +18,9 @@ Each layer builds on the one above it. Start at the top and follow the chain.
 4. **Load the applicable skill** from `skills/` for the task at hand. Each skill module contains SKILL.md, CHANGELOG.md, examples/, and evaluation cases.
 5. **Check the registry** in `registry/skills.yaml` for an overview of all available skills, their versions, and owners.
 6. **Follow workflows** in `workflows/` for multi-step engineering processes that compose multiple skills.
-7. **Read your tool-specific config** from `adapters/` — each AI tool has its own adapter file.
-8. **Validate changes through evaluations** in `evaluations/` before concluding. Run `python evaluations/runner/run.py --registry` to validate both evaluation cases and registry consistency.
+7. **Follow the agent runtime model** in `runtime/` for context management, memory policy, tool usage, and the self-verification loop.
+8. **Read your tool-specific config** from `adapters/` — each AI tool has its own adapter file.
+9. **Validate changes through evaluations** in `evaluations/` before concluding. Use `python evaluations/runner/evaluator.py --case CASE --method rule --output FILE` for rule-based scoring, or `python evaluations/runner/scorecard.py --compare` for regression checks.
 
 ## Communication
 

@@ -40,14 +40,15 @@ specific AI tools — all governed by ownership and review policies.
 | `principles/` | Engineering philosophy | Why do we build software this way? |
 | `standards/` | Mandatory engineering rules | What rules must engineers follow? |
 | `patterns/` | Reusable engineering solutions | How do we usually solve this type of problem? |
-| `skills/` | AI-consumable skill packages | How should an AI approach this task? |
+| `skills/` | AI-consumable skill packages (17 skills) | How should an AI approach this task? |
 | `workflows/` | Composed skill orchestrations | In what order should skills be applied? |
-| `evaluations/` | Skill regression prevention | Is the AI still performing correctly? |
+| `evaluations/` | Skill regression prevention + execution engine | Is the AI still performing correctly? |
 | `adapters/` | AI tool-specific entry-points | What format does this AI tool require? |
+| `runtime/` | Agent operating model (context, memory, tools, verification) | How should agents operate? |
 | `templates/` | Reusable document templates | What structure should this document follow? |
-| `registry/` | Central skill metadata index | What skills are available? |
+| `registry/` | Central skill metadata index (17 skills) | What skills are available? |
 | `governance/` | Ownership, review, release policies | Who decides? How do we release? |
-| `docs/adr/` | Architecture Decision Records | Why was this decision made? |
+| `docs/adr/` | Architecture Decision Records (7 records) | Why was this decision made? |
 | `AGENTS.md` | Generic AI agent entry-point | How should agents use this repository? |
 
 ## Getting Started
@@ -63,6 +64,7 @@ tool-specific adapter in `adapters/`. AI agents should follow the layer hierarch
 | Tool | Entry Point |
 |------|-------------|
 | All agents | [`AGENTS.md`](AGENTS.md) — Generic instructions |
+| All agents (runtime) | [`runtime/README.md`](runtime/README.md) — Operating model |
 | Claude Code | [`adapters/claude/CLAUDE.md`](adapters/claude/CLAUDE.md) |
 | Cursor | [`adapters/cursor/.cursorrules`](adapters/cursor/.cursorrules) |
 | GitHub Copilot | [`adapters/github-copilot/copilot-instructions.md`](adapters/github-copilot/copilot-instructions.md) |
@@ -91,14 +93,26 @@ with quality gates between each step.
 ### Evaluation Framework
 
 Skills are treated like code. Each skill has corresponding evaluation cases that prevent
-regression when skills are updated. See [`evaluations/README.md`](evaluations/README.md) for
-the full philosophy and [`evaluations/runner/run.py`](evaluations/runner/run.py) for the tool.
+regression when skills are updated. The framework supports three modes:
+
+- **Rule-based scoring** via [`evaluations/runner/evaluator.py`](evaluations/runner/evaluator.py)
+- **LLM-as-Judge** via the [`judge_prompt.md`](evaluations/runner/judge_prompt.md) template
+- **Human review** for high-stakes evaluations
+
+Score regression is detected via [`evaluations/runner/scorecard.py`](evaluations/runner/scorecard.py)
+and gated in CI. See [`evaluations/README.md`](evaluations/README.md) for the full philosophy.
 
 ### Governance
 
 The `governance/` directory defines ownership, review policies, and release processes.
 Each skill has a designated owner, changes are classified by severity (patch/minor/major/breaking),
 and releases follow semantic versioning with evaluation gates.
+
+### Agent Runtime
+
+The [`runtime/`](runtime/) directory defines how AI agents should operate — context management,
+memory policy, tool usage guidelines, and a self-verification loop. These are agent-agnostic
+concepts that apply regardless of which AI tool is used.
 
 ### AI-First Design
 

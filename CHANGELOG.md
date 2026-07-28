@@ -5,6 +5,24 @@ All notable changes to this repository are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] - 2026-07-28
+
+### Added
+
+- `evaluations/runner/evaluator.py` — Executable evaluation engine with 3 modes: rule-based keyword scoring, LLM-as-Judge prompt generation, human review
+- `evaluations/runner/scorecard.py` — Score tracking and regression detection with CI gating
+- `runtime/` — Agent runtime concepts (context-management, memory-policy, tool-policy, verification-loop)
+- 12 new architecture-level skills (system-design, distributed-system, database-design, api-design, security-review, production-readiness, incident-response, ai-agent-design, rag-design, mcp-development, llm-evaluation, agent-memory)
+- `docs/adr/006-evaluation-platform.md` — ADR for executable evaluation engine
+- `docs/adr/007-agent-runtime-model.md` — ADR for agent runtime model
+- Registry now tracks per-skill compatibility (claude/cursor/copilot), latest_score, and last_run
+
+### Changed
+
+- `registry/skills.yaml` — Expanded from 5 to 17 skills with compatibility, latest_score, last_run fields
+- `README.md` — Added runtime/, updated skill count to 17, added evaluator tool references
+- `AGENTS.md` — Added runtime reference and evaluator usage instructions
+
 ## [1.3.0] - 2026-07-28
 
 ### Added

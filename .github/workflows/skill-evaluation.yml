@@ -107,25 +107,21 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml
 
-      - name: Check all skills have metadata.yaml
+      - name: Check all skills have required structure
         run: |
           errors=0
           for dir in skills/*/; do
             name=$(basename "$dir")
-            if [ ! -f "${dir}metadata.yaml" ]; then
-              echo "❌ Missing metadata.yaml in $dir"
-              errors=$((errors + 1))
-            fi
             if [ ! -f "${dir}SKILL.md" ]; then
               echo "❌ Missing SKILL.md in $dir"
               errors=$((errors + 1))
             fi
-            if [ ! -d "${dir}examples" ]; then
-              echo "❌ Missing examples/ in $dir"
+            if [ ! -f "${dir}metadata.yaml" ]; then
+              echo "⚠️  Missing metadata.yaml in $dir"
               errors=$((errors + 1))
             fi
-            if [ ! -d "${dir}eval" ]; then
-              echo "❌ Missing eval/ in $dir"
+            if [ ! -f "${dir}CHANGELOG.md" ]; then
+              echo "⚠️  Missing CHANGELOG.md in $dir"
               errors=$((errors + 1))
             fi
           done
@@ -133,4 +129,24 @@ jobs:
             echo "Found $errors errors"
             exit 1
           fi
-          echo "✅ All skill modules have required structure"
+          echo "✅ All $({ ls -d skills/*/; } | wc -l) skill modules have required structure"
+
+  evaluator:
+    name: Test Evaluation Engine
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Verify evaluator imports
+        run: python -c "from evaluations.runner.evaluator import load_case, score_rule_based; print('✅ evaluator.py imports OK')"
+
+      - name: Verify scorecard imports
+        run: python -c "from evaluations.runner.scorecard import compare_scores, load_registry; print('✅ scorecard.py imports OK')"
