@@ -1,0 +1,82 @@
+name: Evaluate
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"  # Every Monday at 6:00 UTC
+  workflow_dispatch:
+    inputs:
+      eval_suite:
+        description: Evaluation suite to run
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - system-design
+          - coding
+
+jobs:
+  evaluate:
+    name: Run Evaluations
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Display evaluation structure
+        run: |
+          echo "=== Evaluation Structure ==="
+          find evaluations -name "*.yaml" -exec basename {} \; | sort
+          echo ""
+          echo "=== Suite: ${{ github.event.inputs.eval_suite || 'all' }} ==="
+          if [ "${{ github.event.inputs.eval_suite || 'all' }}" = "all" ]; then
+            echo "Evaluation cases:"
+            find evaluations -name "*.yaml" | wc -l
+          else
+            echo "Evaluation cases:"
+            find "evaluations/${{ github.event.inputs.eval_suite }}" -name "*.yaml" | wc -l
+          fi
+
+      - name: Validate evaluation YAMLs
+        run: |
+          python3 -c "
+          import yaml, glob, sys
+
+          files = glob.glob('evaluations/**/*.yaml', recursive=True)
+          errors = 0
+
+          required_fields = ['name', 'category', 'version', 'description', 'task', 'expected_capabilities', 'scoring']
+
+          for f in sorted(files):
+              with open(f) as fh:
+                  try:
+                      data = yaml.safe_load(fh)
+                  except yaml.YAMLError as e:
+                      print(f'PARSE ERROR: {f}: {e}')
+                      errors += 1
+                      continue
+
+              for field in required_fields:
+                  if field not in data:
+                      print(f'MISSING FIELD: {f} missing \"{field}\"')
+                      errors += 1
+
+              if 'scoring' in data:
+                  total_weight = sum(
+                      v.get('weight', 0) for v in data['scoring'].values()
+                      if isinstance(v, dict)
+                  )
+                  if abs(total_weight - 100) > 1:
+                      print(f'WEIGHT ERROR: {f} scoring weights sum to {total_weight} (expected 100)')
+                      errors += 1
+
+          if errors:
+              print(f'\nFound {errors} errors')
+              sys.exit(1)
+          else:
+              print(f'All {len(files)} evaluation files validated successfully')
+          "

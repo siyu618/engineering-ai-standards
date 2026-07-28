@@ -1,0 +1,73 @@
+name: ai-agent-eval-design
+category: coding
+version: "1.0.0"
+description: Evaluate the AI agent's ability to design an evaluation framework for a customer support AI agent.
+
+task: >
+  Design an evaluation framework for a customer support AI agent. The agent handles
+  tier-1 support tickets: password reset, order status, refund requests, and account
+  troubleshooting. The agent uses a RAG pipeline with the company's knowledge base
+  and has 5 tools (search_kb, get_order, process_refund, reset_password, escalate_to_human).
+  Design evaluation cases, scoring criteria, regression detection, and a baseline process.
+
+  Include:
+  - 3 evaluation cases with different difficulty levels
+  - Scoring rubrics for each case
+  - A baseline tracking mechanism
+  - A regression detection process
+  - An evaluation pipeline design
+
+context:
+  - 10,000 support tickets/day
+  - Target: 80% automated resolution rate
+  - Knowledge base: 5,000 articles, updated weekly
+  - Tools: search_kb, get_order, process_refund, reset_password, escalate_to_human
+  - Human handoff required for refunds > $100 and account security issues
+  - Currently measuring: resolution rate, customer satisfaction, average handling time
+
+expected_capabilities:
+  - eval_case_design: Create well-structured evaluation cases with clear tasks and criteria
+  - scoring_rubric: Design rubrics that differentiate good, average, and poor agent behavior
+  - regression_detection: Design process to detect when agent behavior degrades
+  - baseline_tracking: Design baseline score mechanism with versioning
+  - pipeline_design: Design evaluation pipeline that can run automatically
+  - coverage: Ensure evaluation covers happy path, edge cases, and safety scenarios
+
+forbidden_behaviors:
+  - vague_criteria: Scoring criteria that are subjective or unmeasurable
+  - no_edge_cases: Only testing happy path scenarios
+  - no_safety: Not testing that agent handles sensitive data correctly or escalates appropriately
+  - manual_only: Evaluation that requires human judgment for every case
+
+scoring:
+  correctness:
+    weight: 30
+    description: Are the evaluation designs technically sound and appropriate?
+    criteria:
+      - Evaluation cases cover realistic support scenarios
+      - Scoring criteria are objective and measurable
+      - Regression detection is correctly designed
+
+  completeness:
+    weight: 25
+    description: Are all aspects of evaluation covered?
+    criteria:
+      - Multiple difficulty levels represented
+      - Edge cases, safety, and failure scenarios included
+      - Baseline tracking and versioning accounted for
+
+  practicality:
+    weight: 25
+    description: Can the evaluation framework be implemented and maintained?
+    criteria:
+      - Evaluation pipeline is automatable
+      - Scoring can be done via LLM-judge or rule-based checks
+      - Maintenance burden is reasonable
+
+  coverage:
+    weight: 20
+    description: Does the evaluation cover the full range of agent behavior?
+    criteria:
+      - Happy path, edge cases, and failure recovery all tested
+      - Safety and security scenarios included
+      - Tool selection and execution accuracy evaluated

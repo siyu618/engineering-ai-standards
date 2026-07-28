@@ -1,0 +1,69 @@
+name: testing-strategy
+category: system-design
+version: "1.0.0"
+description: Evaluate the AI agent's ability to design a comprehensive testing strategy for a microservices payment system.
+
+task: >
+  Design a testing strategy for a payment system composed of 5 microservices: API Gateway,
+  Order Service, Payment Service, Notification Service, and Ledger Service. The system
+  processes 50,000 transactions per day with 99.99% availability requirement. Design the
+  test pyramid, integration test approach, contract tests, chaos engineering experiments,
+  and CI pipeline integration. Consider how to test async flows, idempotency, and
+  multi-region deployment.
+
+context:
+  - 5 microservices communicating via gRPC and async message queues (Kafka)
+  - 50K transactions/day with 99.99% availability target
+  - Async flows: order placed → payment processed → notification sent → ledger updated
+  - Idempotency keys on all payment operations
+  - Multi-region deployment (US, EU, APAC)
+  - Team of 8 engineers, 2-week sprints
+  - Existing test suite: 40% unit test coverage, minimal integration tests
+
+expected_capabilities:
+  - test_pyramid: Design appropriate test pyramid with percentages for each level
+  - integration_testing: Design integration test strategy with testcontainers or equivalents
+  - contract_testing: Design consumer-driven contract tests for gRPC services
+  - async_testing: Strategy for testing async message-driven flows
+  - chaos_testing: Design chaos experiments for payment processing resilience
+  - ci_integration: How tests fit into CI pipeline with parallelization and timing budgets
+  - metrics: Define test quality metrics (coverage, flakiness, execution time)
+
+forbidden_behaviors:
+  - only_unit_tests: Relying only on unit tests for distributed system validation
+  - no_async_coverage: Ignoring testing of async message flows
+  - no_flakiness_management: Not addressing test flakiness in CI
+  - unrealistic_scope: Designing a test strategy that exceeds team capacity
+
+scoring:
+  correctness:
+    weight: 30
+    description: Are the testing approaches technically sound for a payment system?
+    criteria:
+      - Appropriate test levels for each component type
+      - Correct handling of async flow testing with message queues
+      - Contract tests cover critical service-to-service interactions
+
+  completeness:
+    weight: 25
+    description: Are all testing dimensions covered?
+    criteria:
+      - Every test level has clear scope and ownership
+      - Chaos experiments target realistic failure scenarios
+      - CI integration with parallelization and test timing budgets
+
+  practicality:
+    weight: 25
+    description: Can the team realistically implement this strategy?
+    criteria:
+      - Phased approach to reach target coverage from 40%
+      - Tooling choices are practical for the team size
+      - Test maintenance burden is acknowledged and planned for
+
+  maintainability:
+    weight: 20
+    description: Will the test suite remain effective as the system evolves?
+    criteria:
+      - Flakiness detection and management process defined
+      - Test ownership model documented
+      - Test review included in code review process

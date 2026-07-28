@@ -1,0 +1,121 @@
+name: code-review-detect
+category: coding
+version: "1.0.0"
+description: Evaluate the AI agent's ability to detect bugs, security issues, and maintainability concerns during code review.
+
+task: >
+  Review the following Python code for issues. Identify all bugs, security vulnerabilities,
+  performance problems, and maintainability concerns. For each finding, classify its
+  severity (blocking/important/suggestion) and provide a concrete fix.
+
+  ```python
+  import os
+  import pickle
+  from flask import Flask, request, jsonify
+
+  app = Flask(__name__)
+
+  def load_user_data(user_id):
+      filename = f"user_data_{user_id}.pkl"
+      if os.path.exists(filename):
+          with open(filename, "rb") as f:
+              return pickle.load(f)
+      return {"cart": [], "preferences": {}}
+
+  def save_user_data(user_id, data):
+      filename = f"user_data_{user_id}.pkl"
+      with open(filename, "wb") as f:
+          pickle.dump(data, f)
+
+  @app.route("/api/checkout", methods=["POST"])
+  def checkout():
+      data = request.get_json()
+      user_id = data.get("user_id")
+      items = data.get("items", [])
+
+      user_data = load_user_data(user_id)
+      cart = user_data.get("cart", [])
+      cart.extend(items)
+
+      total = 0
+      for item in cart:
+          try:
+              price = get_product_price(item["product_id"])
+              total += price * item["quantity"]
+          except:
+              pass
+
+      discount_code = data.get("discount_code")
+      if discount_code:
+          conn = sqlite3.connect("discounts.db")
+          cursor = conn.cursor()
+          cursor.execute(f"SELECT * FROM discounts WHERE code = '{discount_code}'")
+          row = cursor.fetchone()
+          if row:
+              total *= 0.9
+
+      user_data["cart"] = cart
+      save_user_data(user_id, user_data)
+      return jsonify({"total": total, "status": "success"})
+
+  def get_product_price(product_id):
+      import requests
+      r = requests.get(f"http://internal-pricing:8080/price/{product_id}", timeout=0.5)
+      return r.json()["price"]
+
+  if __name__ == "__main__":
+      app.run(debug=True)
+  ```
+
+context:
+  - This is a Flask web application handling e-commerce checkout
+  - get_product_price calls an internal pricing service
+  - The code runs in production with access to sensitive user data
+  - Python 3.11, Flask 3.0
+
+expected_capabilities:
+  - security_detection: Identify insecure deserialization (pickle), SQL injection, debug mode in production
+  - bug_detection: Identify silent exception handling, missing error handling on external calls
+  - performance_detection: Identify N+1-like patterns, inefficient data storage, lack of caching
+  - maintainability_detection: Identify poor error handling, no logging, no type hints
+  - severity_classification: Correctly classify findings by severity
+  - fix_provision: Provide concrete, correct fixes for each finding
+
+forbidden_behaviors:
+  - missing_critical: Missing critical security issues (SQL injection, pickle, debug mode)
+  - false_positives: Flagging non-issues as problems without justification
+  - vague_recommendations: "Improve security" without specific fixes
+  - no_classification: Not distinguishing between blocking and minor issues
+
+scoring:
+  correctness:
+    weight: 35
+    description: Are the identified issues real and correctly diagnosed?
+    criteria:
+      - All critical security issues identified (pickle, SQL injection, debug mode)
+      - Bug detection is accurate (silent exception handling, missing error handling)
+      - No false positives (flagging correct code as problematic)
+
+  completeness:
+    weight: 25
+    description: How comprehensive is the review across all dimensions?
+    criteria:
+      - Security, correctness, performance, and maintainability all covered
+      - All code paths and edge cases considered
+      - Both obvious and subtle issues identified
+
+  clarity:
+    weight: 20
+    description: Is the review report clear, actionable, and well-organized?
+    criteria:
+      - Findings are clearly described with location references
+      - Severity classification is appropriate and consistent
+      - Fix suggestions are concrete and correct
+
+  practicality:
+    weight: 20
+    description: Are the recommendations practical and implementable?
+    criteria:
+      - Fix suggestions account for production constraints
+      - Recommendations are prioritized by impact
+      - Effort estimate is realistic

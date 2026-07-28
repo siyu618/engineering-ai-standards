@@ -5,6 +5,29 @@ All notable changes to this repository are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-07-28
+
+### Added
+
+- Root-level symlinks: `CLAUDE.md` → `adapters/claude/CLAUDE.md`, `.cursorrules` → `adapters/cursor/.cursorrules`
+- `standards/coding/typescript.md` — TypeScript coding standards
+- `standards/coding/go.md` — Go coding standards
+- `standards/coding/rust.md` — Rust coding standards
+- `patterns/cache/read-through.md` — Read-Through cache pattern
+- `patterns/cache/write-through.md` — Write-Through cache pattern
+- `patterns/cache/write-behind.md` — Write-Behind cache pattern
+- `evaluations/system-design/testing-strategy.yaml` — Testing strategy evaluation case
+- `evaluations/coding/code-review-detect.yaml` — Code review bug detection evaluation case
+- `evaluations/coding/ai-agent-eval-design.yaml` — AI agent evaluation framework design case
+- `.github/workflows/validate.yml` — CI validation workflow (structure, markdown, YAML, symlinks, references)
+- `.github/workflows/evaluate.yml` — Scheduled evaluation workflow
+- `CLAUDE.md` (symlink at repo root) — Auto-detected by Claude Code
+- `.cursorrules` (symlink at repo root) — Auto-detected by Cursor
+
+### Changed
+
+- Updated CHANGELOG for v1.1.0
+
 ## [1.0.0] - 2026-07-28
 
 ### Added
