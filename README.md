@@ -46,8 +46,11 @@ specific AI tools — all governed by ownership and review policies.
 | `adapters/` | AI tool-specific entry-points | What format does this AI tool require? |
 | `runtime/` | Agent operating model (context, memory, tools, verification) | How should agents operate? |
 | `templates/` | Reusable document templates | What structure should this document follow? |
+| `tools/` | CLI tool (`ai-standard`) for managing the platform | How to manage skills and evaluations? |
+| `reports/` | Generated evaluation reports (JSON + Markdown) | What are the latest evaluation scores? |
 | `registry/` | Central skill metadata index (17 skills) | What skills are available? |
 | `governance/` | Ownership, review, release policies | Who decides? How do we release? |
+| `docs/` | User guides (evaluation, skill development, CLI) | How do I use this platform? |
 | `docs/adr/` | Architecture Decision Records (7 records) | Why was this decision made? |
 | `AGENTS.md` | Generic AI agent entry-point | How should agents use this repository? |
 

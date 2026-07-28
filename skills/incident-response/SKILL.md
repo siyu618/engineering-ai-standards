@@ -2,8 +2,8 @@
 name: incident-response
 version: 1.0.0
 category:
-  - 
-architecture  - operations
+  - architecture
+  - operations
 dependencies:
       - standards/architecture/system-design.md
 evaluation:

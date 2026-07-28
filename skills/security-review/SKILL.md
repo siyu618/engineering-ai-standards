@@ -2,8 +2,8 @@
 name: security-review
 version: 1.0.0
 category:
-  - 
-architecture  - security
+  - architecture
+  - security
 dependencies:
       - principles/engineering-principles.md
 evaluation:

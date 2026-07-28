@@ -13,4 +13,3 @@ evaluation:
   threshold: 80
   cases:
     - testing-strategy
----

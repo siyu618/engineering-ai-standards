@@ -150,3 +150,9 @@ jobs:
 
       - name: Verify scorecard imports
         run: python -c "from evaluations.runner.scorecard import compare_scores, load_registry; print('✅ scorecard.py imports OK')"
+
+      - name: Verify CLI imports
+        run: python -c "exec(open('tools/ai-standard/cli.py').read().split('def main')[0]); print('✅ CLI imports OK')"
+
+      - name: Generate evaluation report
+        run: python tools/ai-standard/cli.py report

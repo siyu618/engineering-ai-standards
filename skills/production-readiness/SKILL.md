@@ -2,8 +2,8 @@
 name: production-readiness
 version: 1.0.0
 category:
-  - 
-architecture  - operations
+  - architecture
+  - operations
 dependencies:
       - principles/engineering-principles.md
       - patterns/distributed-system/retry.md

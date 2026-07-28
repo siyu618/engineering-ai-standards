@@ -2,8 +2,8 @@
 name: agent-memory
 version: 1.0.0
 category:
-  - 
-ai  - architecture
+  - ai
+  - architecture
 dependencies:
       - patterns/ai-agent/memory.md
       - patterns/ai-agent/architecture.md

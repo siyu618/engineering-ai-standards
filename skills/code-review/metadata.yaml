@@ -14,4 +14,3 @@ evaluation:
   threshold: 85
   cases:
     - code-review-detect
----

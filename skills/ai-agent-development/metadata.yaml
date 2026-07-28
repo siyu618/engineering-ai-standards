@@ -15,4 +15,3 @@ evaluation:
   threshold: 80
   cases:
     - ai-agent-eval-design
----

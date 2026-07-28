@@ -2,8 +2,8 @@
 name: mcp-development
 version: 1.0.0
 category:
-  - 
-ai  - development
+  - ai
+  - development
 dependencies:
       - patterns/ai-agent/architecture.md
       - patterns/ai-agent/tool-use.md

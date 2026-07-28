@@ -2,8 +2,8 @@
 name: system-design
 version: 1.0.0
 category:
-  - 
-architecture  - system-design
+  - architecture
+  - system-design
 dependencies:
       - principles/engineering-principles.md
       - standards/architecture/system-design.md

@@ -1,0 +1,51 @@
+{
+  "generated": "2026-07-28",
+  "total_skills": 17,
+  "evaluated": 5,
+  "passed": 0,
+  "failed": 0,
+  "not_run": 5,
+  "regressions": [],
+  "evaluations": [
+    {
+      "skill": "ai-agent-development",
+      "version": "1.0.0",
+      "threshold": 80,
+      "score": null,
+      "last_run": null,
+      "status": "not_run"
+    },
+    {
+      "skill": "code-review",
+      "version": "1.0.0",
+      "threshold": 85,
+      "score": null,
+      "last_run": null,
+      "status": "not_run"
+    },
+    {
+      "skill": "design",
+      "version": "1.0.0",
+      "threshold": 85,
+      "score": null,
+      "last_run": null,
+      "status": "not_run"
+    },
+    {
+      "skill": "python-development",
+      "version": "1.0.0",
+      "threshold": 80,
+      "score": null,
+      "last_run": null,
+      "status": "not_run"
+    },
+    {
+      "skill": "testing",
+      "version": "1.0.0",
+      "threshold": 80,
+      "score": null,
+      "last_run": null,
+      "status": "not_run"
+    }
+  ]
+}

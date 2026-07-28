@@ -2,8 +2,8 @@
 name: database-design
 version: 1.0.0
 category:
-  - 
-architecture  - data
+  - architecture
+  - data
 dependencies:
       - standards/architecture/system-design.md
       - patterns/cache/cache-aside.md

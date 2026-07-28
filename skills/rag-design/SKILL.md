@@ -2,8 +2,8 @@
 name: rag-design
 version: 1.0.0
 category:
-  - 
-ai  - architecture
+  - ai
+  - architecture
 dependencies:
       - patterns/ai-agent/architecture.md
 evaluation:

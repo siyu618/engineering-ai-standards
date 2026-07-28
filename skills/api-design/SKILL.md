@@ -2,8 +2,8 @@
 name: api-design
 version: 1.0.0
 category:
-  - 
-architecture  - api
+  - architecture
+  - api
 dependencies:
       - standards/architecture/system-design.md
 evaluation:

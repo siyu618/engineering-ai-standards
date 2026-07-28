@@ -2,8 +2,8 @@
 name: ai-agent-design
 version: 1.0.0
 category:
-  - 
-ai  - architecture
+  - ai
+  - architecture
 dependencies:
       - patterns/ai-agent/architecture.md
       - patterns/ai-agent/memory.md

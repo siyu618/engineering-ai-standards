@@ -5,9 +5,24 @@ All notable changes to this repository are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [1.4.0] - 2026-07-28
+## [1.4.1] - 2026-07-28
 
 ### Added
+
+- `tools/ai-standard/cli.py` — Unified CLI tool: list-skills, validate, eval, report
+- `tools/ai-standard/validator.py` — Reusable validation module (skill structure, registry, eval references)
+- `tools/ai-standard/reporter.py` — Report generation (JSON + Markdown) to reports/
+- `reports/latest.json`, `reports/latest.md`, `reports/history.json` — Evaluation report output
+- `docs/evaluation-guide.md` — How to write and run evaluations
+- `docs/skill-development-guide.md` — How to create a new skill
+- `docs/cli-guide.md` — CLI commands reference
+
+### Changed
+
+- `.github/workflows/skill-evaluation.yml` — Added CLI verification and report generation
+- Fixed YAML syntax in 12 architecture-level skill metadata files
+
+## [1.4.0] - 2026-07-28
 
 - `evaluations/runner/evaluator.py` — Executable evaluation engine with 3 modes: rule-based keyword scoring, LLM-as-Judge prompt generation, human review
 - `evaluations/runner/scorecard.py` — Score tracking and regression detection with CI gating

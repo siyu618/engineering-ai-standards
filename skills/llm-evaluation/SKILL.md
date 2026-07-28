@@ -2,8 +2,8 @@
 name: llm-evaluation
 version: 1.0.0
 category:
-  - 
-ai  - testing
+  - ai
+  - testing
 dependencies:
       - patterns/ai-agent/evaluation.md
 evaluation:

@@ -16,4 +16,3 @@ evaluation:
   threshold: 80
   cases:
     - python-refactor
----

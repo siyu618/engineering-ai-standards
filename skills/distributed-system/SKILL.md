@@ -2,8 +2,8 @@
 name: distributed-system
 version: 1.0.0
 category:
-  - 
-architecture  - distributed-systems
+  - architecture
+  - distributed-systems
 dependencies:
       - patterns/distributed-system/consistency.md
       - patterns/distributed-system/idempotency.md
